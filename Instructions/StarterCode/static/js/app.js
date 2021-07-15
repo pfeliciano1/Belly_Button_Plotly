@@ -6,13 +6,22 @@ Feel free to disregard and create your own code */
 function init() {
 
     // Read json data
-
+    d3.json("samples.json").then(function(data) {
+        console.log(data);
+      
         // Parse and filter data to get sample names
-
+        let names = d3.select("names");
         // Add dropdown option for each sample
-
+        // Use D3 to select the dropdown menu
+        let dropdownMenu = d3.select("#selDataset");
+        
     // Call functions below using the first sample to build metadata and initial plots
-
+        data.metadata.forEach(item =>
+            {
+            // console.log(item.id);
+            d3.select ("#selDataset").append('option').attr('value', item.id).text(item.id);
+            });
+    });
 }
 
 // Define a function that will create metadata for given sample
