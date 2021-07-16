@@ -2,27 +2,33 @@
 This is not the only way to complete this assignment.
 Feel free to disregard and create your own code */
 
-// // Define function that will run on page load
-// function init() {
-
-//     // Read json data
-//     d3.json("samples.json").then(function(data) {
-//         console.log(data);
+// Define function that will run on page load
+function init() {
+    // Add dropdown option for each sample
+    // Use D3 to select the dropdown menu
+    let dropdownMenu = d3.select("#selDataset");
+    // Read json data
+    d3.json("samples.json").then((data) => {
+        // console.log(data);
       
-//         // Parse and filter data to get sample names
-//         let names = d3.select("names");
-//         // Add dropdown option for each sample
-//         // Use D3 to select the dropdown menu
-//         let dropdownMenu = d3.select("#selDataset");
+        // Parse and filter data to get sample names
+        let names = data.names;
         
-//     // Call functions below using the first sample to build metadata and initial plots
-//         data.metadata.forEach(item =>
-//             {
-//             // console.log(item.id);
-//             d3.select ("#selDataset").append('option').attr('value', item.id).text(item.id);
-//             });
-//     });
-// }
+    // Call functions below using the first sample to build metadata and initial plots
+        names.forEach((sample) => {
+            dropdownMenu
+            .append("option")
+            .text(sample)
+            .property("value", sample);
+        })
+    
+        // Use the sample data from the list to build the plots
+        let sampleData = names[0];
+        buildCharts(sampleData);
+        buildMetaData(sampleData);
+        });
+    };
+
 
 // Define a function that will create metadata for given sample
 function buildMetaData(sample) {
@@ -116,4 +122,4 @@ function optionChanged(sample){
 }
 
 // Initialize dashboard on page load
-// init()
+init()
