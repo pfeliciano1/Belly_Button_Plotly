@@ -24,8 +24,8 @@ function init() {
     
         // Use the sample data from the list to build the plots
         let sampleData = names[0];
-        buildCharts(sampleData);
         buildMetaData(sampleData);
+        buildCharts(sampleData);
         });
     };
 
@@ -112,7 +112,7 @@ function buildCharts(sample) {
     });
 }
 
-function optionChanged(sample){
+function optionChanged(newSample){
     // The parameter being passed in this function is new sample id from dropdown menu
 
     // Update metadata with newly selected sample
