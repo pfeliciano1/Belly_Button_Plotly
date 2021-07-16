@@ -49,7 +49,7 @@ function buildMetaData(sample) {
         // Specify the location of the metadata and update it
     // Use `Object.entries` to add each key and value pair to the 'sampleMetadata' (or do a for loop)
     Object.entries(response).forEach(([key, value]) => {
-        sampleMetadata.append("h6").text(`${key.toUpperCase()}: ${value}`);
+        sampleMetadata.append("h6").text(`${key}: ${value}`);
         });
     });
 }
@@ -62,7 +62,7 @@ function buildCharts(sample) {
         
         // Parse and filter the data to get the sample's OTU data
         let sampleData = data.samples;
-        let buildArray = sampleData .filter(sampleItem => sampleItem.id == sample);
+        let buildArray = sampleData.filter(sampleItem => sampleItem.id == sample);
         let response = buildArray[0];
         // Pay attention to what data is required for each chart
         let otu_ids = response.otu_ids;
@@ -86,6 +86,7 @@ function buildCharts(sample) {
         };
 
         Plotly.newPlot("bar", trace1, layout1);
+        
         // Create bubble chart in correct location
         // Build a Bubble Chart
         let trace2 = [
@@ -108,7 +109,49 @@ function buildCharts(sample) {
         };
 
         Plotly.newPlot("bubble", trace2, layout2);
+        
+        // BONUS: GAUGE CHART
 
+        // Gauge Chart to plot weekly washing frequency 
+        let guageChart = d3.select("#gauge");
+        guageChart.html(""); 
+        let washFreq = response.wfreq;
+        
+        let trace3 = [
+            {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: washFreq,
+            title: { text: "<b>Belly Button Washing Frequency </b><br> Scrubs Per Week" },
+            type: "indicator",
+            mode: "gauge+number",     
+            gauge: {
+            axis: { range: [0,9] },
+            bar: { color: "darkblue" },
+            steps: [
+                { range: [0, 1], color: "white" },
+                { range: [1, 2], color: "ivory" },
+                { range: [2, 3], color: "lightyellow" },
+                { range: [3, 4], color: "palegoldenrod" },
+                { range: [4, 5], color: "khaki" },
+                { range: [5, 6], color: "yellow" },
+                { range: [6, 7], color: "gold" },
+                { range: [7, 8], color: "orange" },
+                { range: [8, 9], color: "darkorange" }
+                        
+                ],
+            threshold: {
+                value: washFreq
+                }
+            }
+            }
+        ]; 
+        let layout3 = {  width: 600, 
+                        height: 400, 
+                        margin: { t: 0, b: 0 }, 
+                            };
+        
+        // Plot using Plotly
+        Plotly.newPlot('gauge', trace3, layout3);
     });
 }
 
