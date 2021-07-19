@@ -86,7 +86,7 @@ function buildCharts(sample) {
         };
 
         Plotly.newPlot("bar", trace1, layout1);
-        
+
         // Create bubble chart in correct location
         // Build a Bubble Chart
         let trace2 = [
@@ -115,15 +115,15 @@ function buildCharts(sample) {
         // Gauge Chart to plot weekly washing frequency 
         let guageChart = d3.select("#gauge");
         guageChart.html(""); 
-        let washFreq = response.wfreq;
-        
+        let washFreq = response[0].wfreq;
+        // console.log(washFreq);
         let trace3 = [
             {
             domain: { x: [0, 1], y: [0, 1] },
             value: washFreq,
             title: { text: "<b>Belly Button Washing Frequency </b><br> Scrubs Per Week" },
             type: "indicator",
-            mode: "gauge+number",     
+            mode: "gauge+number+delta",     
             gauge: {
             axis: { range: [0,9] },
             bar: { color: "darkblue" },
@@ -140,6 +140,8 @@ function buildCharts(sample) {
                         
                 ],
             threshold: {
+                line: { color: "red", width: 4 },
+                thickness: 0.75,
                 value: washFreq
                 }
             }
