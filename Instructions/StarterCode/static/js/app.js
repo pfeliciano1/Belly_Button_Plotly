@@ -63,6 +63,7 @@ function buildCharts(sample) {
         // Parse and filter the data to get the sample's OTU data
         let sampleData = data.samples;
         let buildArray = sampleData.filter(sampleItem => sampleItem.id == sample);
+        console.log(buildArray)
         let response = buildArray[0];
         // Pay attention to what data is required for each chart
         let otu_ids = response.otu_ids;
@@ -111,12 +112,16 @@ function buildCharts(sample) {
         Plotly.newPlot("bubble", trace2, layout2);
         
         // BONUS: GAUGE CHART
-
+        sampleData = data.metadata;
+        buildArray = sampleData.filter(sampleItem => sampleItem.id == sample);
+        console.log(buildArray)
+        response = buildArray[0];
         // Gauge Chart to plot weekly washing frequency 
         let guageChart = d3.select("#gauge");
         guageChart.html(""); 
-        let washFreq = response[0].wfreq;
-        // console.log(washFreq);
+        // console.log(response);
+        let washFreq = response.wfreq;
+        console.log(washFreq);
         let trace3 = [
             {
             domain: { x: [0, 1], y: [0, 1] },
